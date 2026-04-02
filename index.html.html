@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso Essenza — ChatGPT do zero ao domínio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bordo: #751e2c;
+    --bordo-escuro: #8d1e26;
+    --nude: #ecd2ca;
+    --nude-claro: #f7ede9;
+    --dourado: #d69a65;
+    --dourado-claro: #e8c49a;
+    --creme: #faf5f2;
+    --texto: #2a1a1a;
+    --texto-muted: #6b4a4a;
+    --branco: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--creme);
+    color: var(--texto);
+    line-height: 1.7;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 999;
+    background: rgba(250, 245, 242, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid rgba(117, 30, 44, 0.15);
+    padding: 0 2rem;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: var(--bordo);
+    text-transform: uppercase;
+  }
+  .logo span { color: var(--dourado); }
+
+  nav { display: flex; align-items: center; gap: 2rem; }
+  nav a {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--texto-muted);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--bordo); }
+
+  .btn-header {
+    background: var(--bordo);
+    color: white !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 2px;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+  .btn-header:hover { background: var(--bordo-escuro) !important; }
+
+  /* ===== HERO ===== */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: linear-gradient(135deg, #2a1015 0%, var(--bordo-escuro) 40%, var(--bordo) 70%, #b05040 100%);
+    position: relative;
+    overflow: hidden;
+    padding-top: 68px;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(214, 154, 101, 0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(236, 210, 202, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* Textura sutil */
+  #hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='0.5' fill='rgba(255,255,255,0.03)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 3rem 4rem 5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(214, 154, 101, 0.15);
+    border: 0.5px solid rgba(214, 154, 101, 0.4);
+    padding: 0.35rem 0.9rem;
+    border-radius: 2px;
+    margin-bottom: 1.8rem;
+    width: fit-content;
+  }
+  .hero-badge span {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dourado-claro);
+    font-weight: 500;
+  }
+  .hero-badge-dot {
+    width: 5px; height: 5px;
+    background: var(--dourado);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  .hero-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.4rem, 4vw, 3.6rem);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .hero-h1 em {
+    font-style: italic;
+    color: var(--dourado-claro);
+  }
+
+  .hero-sub {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 440px;
+    line-height: 1.75;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+  .hero-bullets li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+  }
+  .hero-bullet-icon {
+    width: 18px; height: 18px;
+    min-width: 18px;
+    border: 0.5px solid var(--dourado);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+  .hero-bullet-icon svg { width: 9px; height: 9px; }
+
+  .hero-divider {
+    width: 48px;
+    height: 0.5px;
+    background: rgba(214, 154, 101, 0.5);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 5rem 4rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-card {
+    background: rgba(250, 245, 242, 0.06);
+    border: 0.5px solid rgba(236, 210, 202, 0.25);
+    border-radius: 4px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 360px;
+    backdrop-filter: blur(20px);
+  }
+
+  .cta-card-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dourado-claro);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .cta-card-label::after {
+    content: '';
+    flex: 1;
+    height: 0.5px;
+    background: rgba(214, 154, 101, 0.3);
+  }
+
+  .cta-social-proof {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(255,255,255,0.04);
+    border: 0.5px solid rgba(255,255,255,0.08);
+    border-radius: 2px;
+  }
+  .social-proof-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: var(--dourado-claro);
+    line-height: 1;
+  }
+  .social-proof-text {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.4;
+    font-weight: 300;
+  }
+
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    background: var(--dourado);
+    color: #2a1a1a;
+    padding: 1rem 1.5rem;
+    border-radius: 2px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 0.75rem;
+  }
+  .btn-primary:hover {
+    background: var(--dourado-claro);
+    transform: translateY(-1px);
+  }
+  .btn-primary svg { width: 16px; height: 16px; }
+
+  .btn-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    width: 100%;
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    padding: 0.85rem 1.5rem;
+    border-radius: 2px;
+    border: 0.5px solid rgba(255,255,255,0.2);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.4);
+    color: #fff;
+  }
+
+  .cta-microtexto {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.4);
+    text-align: center;
+    margin-top: 1.25rem;
+    line-height: 1.5;
+  }
+
+  /* ===== SEÇÕES GERAIS ===== */
+  section { padding: 5rem 5rem; }
+
+  .section-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bordo);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 0.5px;
+    background: var(--bordo);
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 300;
+    color: var(--texto);
+    line-height: 1.2;
+    margin-bottom: 1.25rem;
+  }
+  .section-title em { font-style: italic; color: var(--bordo); }
+
+  .section-desc {
+    font-size: 0.95rem;
+    color: var(--texto-muted);
+    max-width: 560px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ===== O QUE É ===== */
+  #oque {
+    background: var(--branco);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .oque-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: rgba(117, 30, 44, 0.08);
+    border: 1px solid rgba(117, 30, 44, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .oque-card {
+    background: var(--creme);
+    padding: 2rem;
+    transition: background 0.2s;
+  }
+  .oque-card:hover { background: var(--nude-claro); }
+
+  .oque-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: rgba(117, 30, 44, 0.15);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+  }
+
+  .oque-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--bordo);
+    margin-bottom: 0.6rem;
+  }
+
+  .oque-card-text {
+    font-size: 0.82rem;
+    color: var(--texto-muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ===== PARA QUEM ===== */
+  #paraquem {
+    background: var(--bordo-escuro);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    position: relative;
+    overflow: hidden;
+  }
+  #paraquem::before {
+    content: '';
+    position: absolute;
+    right: -10%;
+    top: -30%;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(214,154,101,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .paraquem-side .section-eyebrow { color: var(--dourado-claro); }
+  .paraquem-side .section-eyebrow::before { background: var(--dourado-claro); }
+  .paraquem-side .section-title { color: #fff; }
+  .paraquem-side .section-desc { color: rgba(255,255,255,0.6); }
+
+  .paraquem-bloco {
+    padding: 2rem;
+    border: 0.5px solid rgba(236, 210, 202, 0.15);
+    border-radius: 4px;
+    background: rgba(255,255,255,0.03);
+  }
+
+  .paraquem-bloco-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .sim { color: var(--dourado-claro); }
+  .nao { color: rgba(255,255,255,0.4); }
+
+  .paraquem-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.8);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+  .paraquem-icon {
+    font-size: 0.75rem;
+    width: 20px;
+    min-width: 20px;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .paraquem-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== MÓDULOS ===== */
+  #modulos {
+    background: var(--creme);
+  }
+
+  .modulos-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 3.5rem;
+  }
+
+  .modulos-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(117, 30, 44, 0.1);
+    border: 1px solid rgba(117, 30, 44, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+
+  .modulo-card {
+    background: var(--branco);
+    padding: 2.2rem 1.8rem;
+    transition: all 0.25s;
+    cursor: pointer;
+    position: relative;
+  }
+  .modulo-card:hover { background: var(--nude-claro); }
+  .modulo-card.active { background: var(--bordo); }
+
+  .modulo-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--texto-muted);
+    margin-bottom: 1.2rem;
+    font-weight: 300;
+  }
+  .modulo-card.active .modulo-num { color: rgba(255,255,255,0.5); }
+
+  .modulo-titulo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--texto);
+    line-height: 1.25;
+    margin-bottom: 1rem;
+  }
+  .modulo-card.active .modulo-titulo { color: #fff; }
+
+  .modulo-bullets {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .modulo-bullets li {
+    font-size: 0.75rem;
+    color: var(--texto-muted);
+    font-weight: 300;
+    padding-left: 0.9rem;
+    position: relative;
+    line-height: 1.45;
+  }
+  .modulo-bullets li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--dourado);
+    font-size: 0.65rem;
+  }
+  .modulo-card.active .modulo-bullets li { color: rgba(255,255,255,0.75); }
+  .modulo-card.active .modulo-bullets li::before { color: var(--dourado-claro); }
+
+  .modulo-tag {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    width: 6px; height: 6px;
+    background: var(--dourado);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .modulo-card.active .modulo-tag { opacity: 1; }
+
+  .modulo-cta-inline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    border: 0.5px solid rgba(117, 30, 44, 0.2);
+    border-radius: 2px;
+    background: transparent;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bordo);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    width: fit-content;
+  }
+  .modulo-cta-inline:hover {
+    background: var(--bordo);
+    color: #fff;
+  }
+
+  /* ===== TURMAS ===== */
+  #turmas {
+    background: var(--branco);
+  }
+
+  .turmas-header {
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .turmas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .turma-card {
+    border: 0.5px solid rgba(117, 30, 44, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.25s;
+  }
+  .turma-card:hover {
+    border-color: var(--bordo);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(117, 30, 44, 0.08);
+  }
+
+  .turma-card-top {
+    background: var(--bordo);
+    padding: 1.8rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .turma-card-top::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; right: -30px;
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+
+  .turma-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.15);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .turma-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    font-weight: 500;
+  }
+
+  .turma-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(214, 154, 101, 0.2);
+    border: 0.5px solid rgba(214, 154, 101, 0.4);
+    padding: 0.25rem 0.6rem;
+    border-radius: 2px;
+    margin-top: 0.75rem;
+  }
+  .turma-badge span {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dourado-claro);
+  }
+  .turma-badge-dot { width: 4px; height: 4px; background: var(--dourado); border-radius: 50%; }
+
+  .turma-card-bottom {
+    padding: 1.25rem 1.5rem;
+    background: var(--creme);
+  }
+  .turma-sub {
+    font-size: 0.78rem;
+    color: var(--texto-muted);
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .btn-turma {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.65rem;
+    background: transparent;
+    border: 0.5px solid var(--bordo);
+    border-radius: 2px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--bordo);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-turma:hover {
+    background: var(--bordo);
+    color: #fff;
+  }
+  .btn-turma svg { width: 13px; height: 13px; }
+
+  /* ===== TALISSA ===== */
+  #talissa {
+    background: var(--creme);
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .talissa-img-container {
+    position: relative;
+  }
+  .talissa-img-placeholder {
+    width: 100%;
+    padding-top: 120%;
+    background: var(--nude);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+  .talissa-img-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--nude) 0%, var(--nude-claro) 100%);
+  }
+  .talissa-img-inner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .talissa-img-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(117, 30, 44, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .talissa-img-inner p {
+    font-size: 0.72rem;
+    color: var(--texto-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .talissa-ornamento {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    width: 120px; height: 120px;
+    border: 0.5px solid rgba(117, 30, 44, 0.12);
+    border-radius: 4px;
+    background: var(--creme);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem;
+    z-index: 2;
+  }
+  .talissa-ornamento-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--bordo);
+    line-height: 1;
+  }
+  .talissa-ornamento-text {
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--texto-muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .talissa-content .section-desc {
+    max-width: 100%;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .talissa-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--bordo);
+    line-height: 1.5;
+    padding-left: 1.5rem;
+    border-left: 2px solid var(--dourado);
+    margin: 2rem 0;
+  }
+
+  .talissa-credenciais {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  .credencial {
+    flex: 1;
+    padding: 1rem;
+    background: var(--branco);
+    border: 0.5px solid rgba(117, 30, 44, 0.1);
+    border-radius: 4px;
+    text-align: center;
+  }
+  .credencial-icon {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+  }
+  .credencial-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--texto-muted);
+    font-weight: 500;
+  }
+
+  /* ===== FAQ ===== */
+  #faq {
+    background: var(--branco);
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .faq-item {
+    border-bottom: 0.5px solid rgba(117, 30, 44, 0.1);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--texto);
+    transition: color 0.2s;
+    user-select: none;
+  }
+  .faq-question:hover { color: var(--bordo); }
+
+  .faq-icon {
+    width: 22px; height: 22px;
+    min-width: 22px;
+    border: 0.5px solid rgba(117, 30, 44, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    color: var(--bordo);
+    font-size: 1rem;
+    font-weight: 300;
+  }
+  .faq-item.open .faq-icon {
+    background: var(--bordo);
+    color: #fff;
+    transform: rotate(45deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+    font-size: 0.84rem;
+    color: var(--texto-muted);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+  .faq-item.open .faq-answer {
+    max-height: 200px;
+    padding-bottom: 1.25rem;
+  }
+
+  /* ===== CTA FINAL ===== */
+  #cta-final {
+    background: linear-gradient(135deg, #1a0a0e 0%, var(--bordo-escuro) 50%, #9b2030 100%);
+    text-align: center;
+    padding: 7rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  #cta-final::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 30% 50%, rgba(214, 154, 101, 0.07) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 50%, rgba(236, 210, 202, 0.05) 0%, transparent 50%);
+  }
+
+  .cta-final-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .cta-final-divider {
+    width: 40px;
+    height: 0.5px;
+    background: rgba(214, 154, 101, 0.6);
+    margin: 0 auto 1.5rem;
+  }
+
+  .cta-final-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 300;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .cta-final-h2 em { font-style: italic; color: var(--dourado-claro); }
+
+  .cta-final-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .cta-final-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .btn-final {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: var(--dourado);
+    color: #2a1a1a;
+    padding: 1.1rem 2.5rem;
+    border-radius: 2px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-final:hover {
+    background: var(--dourado-claro);
+    transform: translateY(-1px);
+  }
+  .btn-final svg { width: 16px; height: 16px; }
+
+  .cta-final-micro {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.06em;
+    margin-top: 0.25rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: #1a0a0e;
+    padding: 3rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .footer-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 2rem;
+    border-bottom: 0.5px solid rgba(236, 210, 202, 0.08);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+  }
+  .footer-logo span { color: var(--dourado); }
+
+  .footer-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .footer-links a {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--dourado-claro); }
+
+  .footer-social {
+    display: flex;
+    gap: 1rem;
+  }
+  .footer-social a {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.4);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+  .footer-social a:hover { color: var(--dourado-claro); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.06em;
+  }
+
+  /* ===== MOBILE CTA FIXO ===== */
+  .mobile-cta {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--bordo);
+    z-index: 998;
+    padding: 0.85rem 1.5rem;
+  }
+  .mobile-cta a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  /* ===== SCROLLBAR ===== */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--creme); }
+  ::-webkit-scrollbar-thumb { background: rgba(117, 30, 44, 0.25); border-radius: 2px; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1100px) {
+    section { padding: 4rem 3rem; }
+    #hero { grid-template-columns: 1fr; padding: 6rem 3rem 4rem; }
+    .hero-right { padding: 2rem 0 0; justify-content: flex-start; }
+    .cta-card { max-width: 100%; }
+    #oque { grid-template-columns: 1fr; }
+    #paraquem { grid-template-columns: 1fr; }
+    #talissa { grid-template-columns: 1fr; }
+    #faq { grid-template-columns: 1fr; }
+    .modulos-grid { grid-template-columns: 1fr 1fr; }
+    .turmas-grid { grid-template-columns: 1fr 1fr; }
+    nav { display: none; }
+    .mobile-cta { display: block; }
+  }
+
+  @media (max-width: 640px) {
+    section { padding: 3.5rem 1.5rem; }
+    #hero { padding: 5rem 1.5rem 4rem; }
+    header { padding: 0 1.5rem; }
+    .modulos-grid { grid-template-columns: 1fr; }
+    .turmas-grid { grid-template-columns: 1fr 1fr; }
+    .oque-cards { grid-template-columns: 1fr; }
+    .talissa-credenciais { flex-direction: column; }
+    footer { padding: 2.5rem 1.5rem; }
+    .footer-top { flex-direction: column; gap: 1.5rem; }
+    .footer-bottom { flex-direction: column; gap: 0.75rem; }
+    .turmas-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Essen<span>z</span>a</div>
+  <nav>
+    <a href="#oque">O Curso</a>
+    <a href="#paraquem">Para quem</a>
+    <a href="#modulos">Módulos</a>
+    <a href="#turmas">Turmas</a>
+    <a href="#talissa">Talissa</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://wa.me/83998850124" class="btn-header">Reservar pelo WhatsApp</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      <span>Curso Essenza · Turmas Abertas</span>
+    </div>
+
+    <h1 class="hero-h1">
+      ChatGPT do zero<br>ao <em>domínio real.</em>
+    </h1>
+
+    <p class="hero-sub">Aprenda a usar IA para acelerar processos, criar com estratégia e transformar produtividade em resultado concreto — com método, não com sorte.</p>
+
+    <div class="hero-divider"></div>
+
+    <ul class="hero-bullets">
+      <li>
+        <div class="hero-bullet-icon">
+          <svg viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 4L3.5 6.5L9 1" stroke="#D69A65" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        Do básico ao avançado, com aplicação prática imediata
+      </li>
+      <li>
+        <div class="hero-bullet-icon">
+          <svg viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 4L3.5 6.5L9 1" stroke="#D69A65" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        Prompts, projetos e assistentes personalizados
+      </li>
+      <li>
+        <div class="hero-bullet-icon">
+          <svg viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 4L3.5 6.5L9 1" stroke="#D69A65" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        Método para nunca mais depender de tentativa e erro
+      </li>
+      <li>
+        <div class="hero-bullet-icon">
+          <svg viewBox="0 0 10 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 4L3.5 6.5L9 1" stroke="#D69A65" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        Ciência, estratégia e sensibilidade em cada módulo
+      </li>
+    </ul>
+  </div>
+
+  <div class="hero-right">
+    <div class="cta-card">
+      <div class="cta-card-label">Reserve sua vaga</div>
+
+      <div class="cta-social-proof">
+        <div class="social-proof-num">4</div>
+        <div class="social-proof-text">Turmas realizadas<br>com sucesso ✦</div>
+      </div>
+
+      <a href="https://wa.me/83998850124" class="btn-primary">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Quero minha vaga no WhatsApp
+      </a>
+
+      <a href="#turmas" class="btn-secondary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px">
+          <path d="M15 10l-4 4l4 4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 12H9" stroke-linecap="round"/>
+        </svg>
+        Ver turmas anteriores
+      </a>
+
+      <p class="cta-microtexto">Respondo pessoalmente ou pelo time.<br>Clique e receba as informações da próxima turma.</p>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE É -->
+<section id="oque">
+  <div>
+    <div class="section-eyebrow">O Curso Essenza</div>
+    <h2 class="section-title">Não é sobre ferramenta.<br>É sobre <em>operar com estratégia.</em></h2>
+    <p class="section-desc">O Essenza é um curso de ChatGPT estruturado em 4 pilares que levam você do básico ao domínio real — com método, não com tentativa e erro.</p>
+  </div>
+  <div class="oque-cards">
+    <div class="oque-card">
+      <div class="oque-card-num">01</div>
+      <div class="oque-card-title">Clareza</div>
+      <p class="oque-card-text">Configure o ChatGPT alinhado à sua essência. Instruções personalizadas que fazem a ferramenta trabalhar para você.</p>
+    </div>
+    <div class="oque-card">
+      <div class="oque-card-num">02</div>
+      <div class="oque-card-title">Execução</div>
+      <p class="oque-card-text">Prompts que funcionam de verdade. Estrutura, técnica e banco de prompts por objetivo — criativo, diretivo e diagnóstico.</p>
+    </div>
+    <div class="oque-card">
+      <div class="oque-card-num">03</div>
+      <div class="oque-card-title">Sistema</div>
+      <p class="oque-card-text">Organize o ChatGPT por projetos e áreas. Consistência, velocidade e foco — sem recomeçar do zero a cada conversa.</p>
+    </div>
+    <div class="oque-card">
+      <div class="oque-card-num">04</div>
+      <div class="oque-card-title">Escala</div>
+      <p class="oque-card-text">Crie assistentes personalizados por função — conteúdo, vendas, atendimento. Delegue o que te trava. Escale o que importa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM -->
+<section id="paraquem">
+  <div class="paraquem-side">
+    <div class="section-eyebrow">Identificação</div>
+    <h2 class="section-title">Para quem é<br>este curso?</h2>
+    <p class="section-desc">Se você se vê em algum dos blocos ao lado, o Essenza foi feito para onde você está agora — e para onde quer chegar.</p>
+  </div>
+
+  <div class="paraquem-grid">
+    <div class="paraquem-bloco">
+      <div class="paraquem-bloco-title sim">✦ &nbsp;Para você que…</div>
+      <div class="paraquem-item">
+        <div class="paraquem-icon" style="color: var(--dourado-claro);">→</div>
+        Quer aprender IA sem complicação e sem precisar de background técnico
+      </div>
+      <div class="paraquem-item">
+        <div class="paraquem-icon" style="color: var(--dourado-claro);">→</div>
+        Sente que perde horas com tarefas repetitivas que poderiam ser automatizadas
+      </div>
+      <div class="paraquem-item">
+        <div class="paraquem-icon" style="color: var(--dourado-claro);">→</div>
+        Precisa produzir mais — conteúdo, apresentações, estratégia, organização
+      </div>
+      <div class="paraquem-item">
+        <div class="paraquem-icon" style="color: var(--dourado-claro);">→</div>
+        Quer usar o ChatGPT com método, consistência e propósito real
+      </div>
+    </div>
+
+    <div class="paraquem-bloco">
+      <div class="paraquem-bloco-title nao">✕ &nbsp;Não é para você se…</div>
+      <div class="paraquem-item" style="color: rgba(255,255,255,0.45);">
+        <div class="paraquem-icon" style="color: rgba(255,255,255,0.25);">—</div>
+        Você busca apenas "prompt pronto milagroso" sem entender a estrutura por trás
+      </div>
+      <div class="paraquem-item" style="color: rgba(255,255,255,0.45);">
+        <div class="paraquem-icon" style="color: rgba(255,255,255,0.25);">—</div>
+        Você não tem intenção de aplicar o que aprende na prática
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MÓDULOS -->
+<section id="modulos">
+  <div class="modulos-header">
+    <div>
+      <div class="section-eyebrow">Conteúdo programático</div>
+      <h2 class="section-title">O que você vai <em>aprender</em></h2>
+    </div>
+  </div>
+
+  <div class="modulos-grid">
+    <div class="modulo-card active" onclick="setModulo(this)">
+      <div class="modulo-tag"></div>
+      <div class="modulo-num">Módulo I</div>
+      <div class="modulo-titulo">Padronizações do ChatGPT + Técnica da Árvore</div>
+      <ul class="modulo-bullets">
+        <li>Instruções personalizadas — seu Chat alinhado à sua essência</li>
+        <li>Como treinar o ChatGPT para funcionar do seu jeito</li>
+        <li>Técnica da Árvore para ramificar ideias com consistência</li>
+      </ul>
+    </div>
+
+    <div class="modulo-card" onclick="setModulo(this)">
+      <div class="modulo-tag"></div>
+      <div class="modulo-num">Módulo II</div>
+      <div class="modulo-titulo">A Arte do Prompt</div>
+      <ul class="modulo-bullets">
+        <li>Regra de Ouro + Estrutura (Contexto + Comando + Objetivo)</li>
+        <li>Técnica P.R.O.M.P.T. completa</li>
+        <li>Banco de prompts por objetivo: criativo, diretivo e diagnóstico</li>
+      </ul>
+    </div>
+
+    <div class="modulo-card" onclick="setModulo(this)">
+      <div class="modulo-tag"></div>
+      <div class="modulo-num">Módulo III</div>
+      <div class="modulo-titulo">Organização de Projetos no GPT</div>
+      <ul class="modulo-bullets">
+        <li>Técnica P.A.C.T.O.</li>
+        <li>Como dividir conversas por áreas para ganhar consistência</li>
+        <li>Sistema de organização que gera velocidade real</li>
+      </ul>
+    </div>
+
+    <div class="modulo-card" onclick="setModulo(this)">
+      <div class="modulo-tag"></div>
+      <div class="modulo-num">Módulo IV</div>
+      <div class="modulo-titulo">Assistentes Personalizados (GPTs)</div>
+      <ul class="modulo-bullets">
+        <li>Criar assistentes por função: conteúdo, vendas, atendimento</li>
+        <li>Instruções prontas e testes de validação</li>
+        <li>Delegar o que trava. Escalar o que importa.</li>
+      </ul>
+    </div>
+  </div>
+
+  <a href="https://wa.me/83998850124" class="modulo-cta-inline">
+    Quero aprender isso na prática → WhatsApp
+  </a>
+</section>
+
+<!-- TURMAS ANTERIORES -->
+<section id="turmas">
+  <div class="turmas-header">
+    <div>
+      <div class="section-eyebrow">Histórico</div>
+      <h2 class="section-title">Turmas <em>anteriores</em></h2>
+      <p style="font-size:0.88rem; color:var(--texto-muted); font-weight:300; margin-top:0.5rem;">4 turmas realizadas. Resultados reais. Veja o que aconteceu.</p>
+    </div>
+  </div>
+
+  <div class="turmas-grid">
+    <div class="turma-card">
+      <div class="turma-card-top">
+        <div class="turma-num">01</div>
+        <div class="turma-label">Turma 1</div>
+        <div class="turma-badge">
+          <div class="turma-badge-dot"></div>
+          <span>Concluída ✦</span>
+        </div>
+      </div>
+      <div class="turma-card-bottom">
+        <p class="turma-sub">Turma realizada com sucesso ✨</p>
+        <a href="https://www.instagram.com/reel/DN3nSGk3meo/" target="_blank" class="btn-turma">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>
+          </svg>
+          Assistir Reels
+        </a>
+      </div>
+    </div>
+
+    <div class="turma-card">
+      <div class="turma-card-top">
+        <div class="turma-num">02</div>
+        <div class="turma-label">Turma 2</div>
+        <div class="turma-badge">
+          <div class="turma-badge-dot"></div>
+          <span>Concluída ✦</span>
+        </div>
+      </div>
+      <div class="turma-card-bottom">
+        <p class="turma-sub">Turma realizada com sucesso ✨</p>
+        <a href="https://www.instagram.com/reel/DN1PAd53guv/" target="_blank" class="btn-turma">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>
+          </svg>
+          Assistir Reels
+        </a>
+      </div>
+    </div>
+
+    <div class="turma-card">
+      <div class="turma-card-top">
+        <div class="turma-num">03</div>
+        <div class="turma-label">Turma 3</div>
+        <div class="turma-badge">
+          <div class="turma-badge-dot"></div>
+          <span>Concluída ✦</span>
+        </div>
+      </div>
+      <div class="turma-card-bottom">
+        <p class="turma-sub">Turma realizada com sucesso ✨</p>
+        <a href="https://www.instagram.com/reel/DPROeJ9DXEi/" target="_blank" class="btn-turma">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>
+          </svg>
+          Assistir Reels
+        </a>
+      </div>
+    </div>
+
+    <div class="turma-card">
+      <div class="turma-card-top">
+        <div class="turma-num">04</div>
+        <div class="turma-label">Turma 4</div>
+        <div class="turma-badge">
+          <div class="turma-badge-dot"></div>
+          <span>Concluída ✦</span>
+        </div>
+      </div>
+      <div class="turma-card-bottom">
+        <p class="turma-sub">Turma realizada com sucesso ✨</p>
+        <a href="https://www.instagram.com/reel/DRuoejBiVQZ/" target="_blank" class="btn-turma">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none"/>
+          </svg>
+          Assistir Reels
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUEM É TALISSA -->
+<section id="talissa">
+  <div class="talissa-img-container">
+    <div class="talissa-img-placeholder">
+      <div class="talissa-img-inner">
+        <div class="talissa-img-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(117,30,44,0.4)" stroke-width="1.2" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+        </div>
+        <p>Foto da Talissa</p>
+      </div>
+    </div>
+    <div class="talissa-ornamento">
+      <div class="talissa-ornamento-num">4×</div>
+      <div class="talissa-ornamento-text">Turmas<br>realizadas</div>
+    </div>
+  </div>
+
+  <div class="talissa-content">
+    <div class="section-eyebrow">A professora</div>
+    <h2 class="section-title">Quem é<br><em>Talissa Mozzini</em></h2>
+
+    <blockquote class="talissa-quote">
+      "Ciência, estratégia, sensibilidade e tecnologia — a serviço de transformação real."
+    </blockquote>
+
+    <p class="section-desc">Definir quem sou não cabe em um único título — porque minha trajetória foi construída por múltiplas frentes que se conectam em um mesmo propósito: transformar conhecimento em experiência.</p>
+
+    <p class="section-desc" style="margin-top:1rem;">Apresentadora do <em>Entre Taças</em> na TV Tambaú. À frente da gestão de @famigliamuccini e @saporeditaliajp. Doutora em Psiconeuroimunologia pela UFPB. Palestrante e professora na interseção entre inteligência artificial, estratégia e o universo do vinho.</p>
+
+    <p class="section-desc" style="margin-top:1rem;">Hoje, uno ciência, sensibilidade, estratégia e tecnologia para conduzir pessoas e empresas rumo a resultados reais — com clareza, profundidade e humanidade.</p>
+
+    <div class="talissa-credenciais">
+      <div class="credencial">
+        <div class="credencial-icon">📺</div>
+        <div class="credencial-label">TV Tambaú</div>
+      </div>
+      <div class="credencial">
+        <div class="credencial-icon">🍽</div>
+        <div class="credencial-label">Gestão gastro.</div>
+      </div>
+      <div class="credencial">
+        <div class="credencial-icon">🎓</div>
+        <div class="credencial-label">Doutora UFPB</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div>
+    <div class="section-eyebrow">Dúvidas</div>
+    <h2 class="section-title">Perguntas<br><em>frequentes</em></h2>
+    <p class="section-desc">Tudo que você precisa saber antes de reservar sua vaga.</p>
+  </div>
+
+  <div class="faq-list">
+    <div class="faq-item open">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Preciso saber tecnologia para começar?
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">Não. O Essenza foi desenhado para quem parte do zero. A metodologia progressiva garante que você entenda cada etapa antes de avançar — sem jargões desnecessários e com aplicação prática desde o primeiro módulo.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        O curso é para qual nível?
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">Do zero ao avançado. Se você nunca usou o ChatGPT, vai aprender a base com solidez. Se já usa, vai descobrir como usar com método — e criar assistentes personalizados para o seu negócio.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Vou aprender a usar o ChatGPT para trabalho e negócios?
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">Sim. O foco é aplicação real: conteúdo, estratégia, produtividade, apresentações, organização e automação de processos. Você sai do curso com ferramentas prontas para usar no dia seguinte.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Tem material de apoio?
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">Sim. O curso inclui eBook Essenza, banco de prompts por objetivo, templates e instruções prontas para assistentes personalizados.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        Como faço minha reserva?
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">Clique em qualquer botão "Reservar pelo WhatsApp" nesta página. Você será direcionado ao contato da Talissa, que responde pessoalmente ou pelo time com todas as informações da próxima turma.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        As vagas são limitadas?
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">Sim. O formato do Essenza é pensado para garantir qualidade na experiência. As turmas têm vagas limitadas para que cada aluno tenha a atenção necessária durante o curso.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        As turmas anteriores ficam disponíveis?
+        <div class="faq-icon">+</div>
+      </div>
+      <div class="faq-answer">Os Reels das turmas anteriores estão disponíveis nesta página, na seção "Turmas anteriores". Você pode assistir para ver como o curso acontece na prática antes de se inscrever.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section id="cta-final">
+  <div class="cta-final-inner">
+    <div class="cta-final-divider"></div>
+    <h2 class="cta-final-h2">Você não precisa saber tudo sobre<br>tecnologia. Precisa saber <em>usar com propósito.</em></h2>
+    <p class="cta-final-sub">O Essenza não é sobre ferramenta. É sobre método. É sobre dominar processos e operar com estratégia — qualquer que seja o seu negócio.</p>
+    <div class="cta-final-btns">
+      <a href="https://wa.me/83998850124" class="btn-final">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Reservar pelo WhatsApp
+      </a>
+      <p class="cta-final-micro">Respondo pessoalmente ou pelo time — sem compromisso.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-logo">Essen<span>z</span>a</div>
+    <div class="footer-links">
+      <a href="#oque">O Curso</a>
+      <a href="#modulos">Módulos</a>
+      <a href="#turmas">Turmas</a>
+      <a href="#talissa">Talissa</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://instagram.com/essenzainova" target="_blank">@essenzainova</a>
+      <a href="https://instagram.com/talissamozzini" target="_blank">@talissamozzini</a>
+      <a href="https://wa.me/83998850124" target="_blank">WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Curso Essenza · Talissa Mozzini. Todos os direitos reservados.</p>
+    <p class="footer-copy">João Pessoa, Paraíba · Brasil</p>
+  </div>
+</footer>
+
+<!-- MOBILE CTA FIXO -->
+<div class="mobile-cta">
+  <a href="https://wa.me/83998850124">
+    <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;flex-shrink:0">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    Quero minha vaga no WhatsApp
+  </a>
+</div>
+
+<script>
+function setModulo(card) {
+  document.querySelectorAll('.modulo-card').forEach(c => c.classList.remove('active'));
+  card.classList.add('active');
+}
+
+function toggleFaq(question) {
+  const item = question.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
